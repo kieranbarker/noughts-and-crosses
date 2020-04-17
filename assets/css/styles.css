@@ -1,0 +1,25 @@
+body {
+  width: 88%;
+  max-width: 40em;
+  margin: 1em auto;
+  line-height: 1.5;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}
+
+td, button {
+  width: 90px;
+  height: 90px;
+}
+
+td {
+  display: inline-block;
+}
+
+button {
+  font-size: 3rem;
+  text-transform: uppercase;
+}
