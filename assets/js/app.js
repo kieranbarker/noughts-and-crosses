@@ -8,7 +8,18 @@
 
   // Create the Reef component
   var app = new Reef("#app", {
-    template: createBoard
+    data: {
+      currentTurn: true, // true for X; false for O
+      squares: ["", "", "", "", "", "", "", "", ""]
+    },
+    template: function (props) {
+      return (
+        "<p>Current turn: " + (props.currentTurn ? "X" : "O") + "</p>" +
+        "<table>" +
+          props.squares.map(createSquare).join("") +
+        "</table>"
+      );
+    }
   });
 
 
@@ -17,41 +28,60 @@
   //
 
   /**
-   * Create a square
-   * @returns {String} An HTML string
+   * 
+   * @param   {String} square The value of the square ("", "x", or "o")
+   * @param   {Number} index  The index of the square
+   * @returns {String}        An HTML string for the square
    */
-  function createSquare () {
-    return (
-      "<td>" +
-        "<button type='button'></button>" +
-      "</td>"
+  function createSquare (square, index) {
+
+    // Store the HTML string
+    var html = "";
+
+    // If start of row, open <tr>
+    if (index % 3 === 0) {
+      html += "<tr>"
+    }
+
+    // Add square
+    html += (
+      "<td><button type='button' data-square='" + index + "'" + (square ? "disabled" : "") + ">" +
+        square +
+      "</button></td>"
     );
+
+    // If end of row, close </tr>
+    if ((index + 1) % 3 === 0) {
+      html += "</tr>"
+    }
+
+    // Return the HTML string
+    return html;
+
   }
 
   /**
-   * Create a row of three squares
-   * @returns {String} An HTML string
+   * Take the current player's turn
+   * @param {Object} event The Event object
    */
-  function createRow () {
-    var html = "<tr>";
-    for (var i = 1; i <= 3; i++) {
-      html += createSquare();
-    }
-    html += "</tr>";
-    return html;
-  }
+  function takeTurn (event) {
 
-  /**
-   * Create three rows of three squares
-   * @returns {String} An HTML string
-   */
-  function createBoard () {
-    var html = "<table>";
-    for (var i = 1; i <= 3; i++) {
-      html += createRow();
-    }
-    html += "</table>";
-    return html;
+    // Get the index of the clicked square
+    var index = event.target.getAttribute("data-square");
+    if (!index) return;
+
+    // Get an immutable clone of the current state
+    var data = app.getData();
+
+    // Claim the square
+    data.squares[index] = data.currentTurn ? "x" : "o";
+
+    // Change current player
+    data.currentTurn = !data.currentTurn;
+
+    // Update the state
+    app.setData(data);
+
   }
 
 
@@ -60,6 +90,11 @@
   //
 
   // Initialize the app
+  Reef.debug(true);
+  console.log(app);
   app.render();
+
+  // Take turns when squares are clicked
+  document.body.addEventListener("click", takeTurn);
 
 })();
