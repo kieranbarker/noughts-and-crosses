@@ -10,7 +10,8 @@
   var app = new Reef("#app", {
     data: {
       currentTurn: true, // true for X; false for O
-      squares: ["", "", "", "", "", "", "", "", ""]
+      squares: ["", "", "", "", "", "", "", "", ""],
+      winner: null
     },
     template: template
   });
@@ -60,11 +61,20 @@
    */
   function template (props) {
 
+    // Normal play
+    if (!props.winner) {
+      return (
+        "<p>Current turn: " + (props.currentTurn ? "X" : "O") + "</p>" +
+        "<table>" +
+          props.squares.map(createSquare).join("") +
+        "</table>"
+      );
+    }
+
+    // Show winner
     return (
-      "<p>Current turn: " + (props.currentTurn ? "X" : "O") + "</p>" +
-      "<table>" +
-        props.squares.map(createSquare).join("") +
-      "</table>"
+      "<h2>🎉 The winner is " + props.winner + "! 🎉</h2>" +
+      "<button type='button' data-reset>Play Again</button>"
     );
 
   }
