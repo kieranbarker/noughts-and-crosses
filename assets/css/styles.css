@@ -20,6 +20,14 @@ td {
 }
 
 button {
+  border: 1px solid #d7d7d7;
+  color: #000;
+  background: none;
   font-size: 3rem;
   text-transform: uppercase;
+  cursor: pointer;
+}
+
+:disabled {
+  cursor: auto;
 }

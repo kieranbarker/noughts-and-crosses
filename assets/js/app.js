@@ -43,7 +43,11 @@
     }
 
     // Add square
-    html += "<td><button type='button' data-square='" + index + "'>" + square + "</button></td>";
+    html += (
+      "<td><button type='button' data-square='" + index + "'" + (square ? "disabled" : "") + ">" +
+        square +
+      "</button></td>"
+    );
 
     // If end of row, close </tr>
     if ((index + 1) % 3 === 0) {
