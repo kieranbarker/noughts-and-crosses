@@ -14,6 +14,7 @@
     },
     template: function (props) {
       return (
+        "<p>Current turn: " + (props.currentTurn ? "X" : "O") + "</p>" +
         "<table>" +
           props.squares.map(createSquare).join("") +
         "</table>"
