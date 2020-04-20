@@ -9,6 +9,7 @@
   // Create the Reef component
   var app = new Reef("#app", {
     data: {
+      currentTurn: true, // true for X; false for O
       squares: ["", "", "", "", "", "", "", "", ""]
     },
     template: function (props) {
