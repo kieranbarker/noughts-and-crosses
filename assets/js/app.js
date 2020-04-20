@@ -12,14 +12,7 @@
       currentTurn: true, // true for X; false for O
       squares: ["", "", "", "", "", "", "", "", ""]
     },
-    template: function (props) {
-      return (
-        "<p>Current turn: " + (props.currentTurn ? "X" : "O") + "</p>" +
-        "<table>" +
-          props.squares.map(createSquare).join("") +
-        "</table>"
-      );
-    }
+    template: template
   });
 
 
@@ -57,6 +50,22 @@
 
     // Return the HTML string
     return html;
+
+  }
+
+  /**
+   * Update the UI based on the current state/data
+   * @param   {Object} props The state/data
+   * @returns {String}       An HTML string for the template
+   */
+  function template (props) {
+
+    return (
+      "<p>Current turn: " + (props.currentTurn ? "X" : "O") + "</p>" +
+      "<table>" +
+        props.squares.map(createSquare).join("") +
+      "</table>"
+    );
 
   }
 
