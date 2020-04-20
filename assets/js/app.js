@@ -8,7 +8,16 @@
 
   // Create the Reef component
   var app = new Reef("#app", {
-    template: createBoard
+    data: {
+      squares: ["", "", "", "", "", "", "", "", ""]
+    },
+    template: function (props) {
+      return (
+        "<table>" +
+          props.squares.map(createSquare).join("") +
+        "</table>"
+      );
+    }
   });
 
 
@@ -16,42 +25,27 @@
   // Functions
   //
 
-  /**
-   * Create a square
-   * @returns {String} An HTML string
-   */
-  function createSquare () {
-    return (
-      "<td>" +
-        "<button type='button'></button>" +
-      "</td>"
-    );
-  }
+  function createSquare (square, index) {
 
-  /**
-   * Create a row of three squares
-   * @returns {String} An HTML string
-   */
-  function createRow () {
-    var html = "<tr>";
-    for (var i = 1; i <= 3; i++) {
-      html += createSquare();
-    }
-    html += "</tr>";
-    return html;
-  }
+    // Store the HTML string
+    var html = "";
 
-  /**
-   * Create three rows of three squares
-   * @returns {String} An HTML string
-   */
-  function createBoard () {
-    var html = "<table>";
-    for (var i = 1; i <= 3; i++) {
-      html += createRow();
+    // If start of row, open <tr>
+    if (index % 3 === 0) {
+      html += "<tr>"
     }
-    html += "</table>";
+
+    // Add square
+    html += "<td><button type='button' data-square='" + index + "'>" + square + "</button></td>";
+
+    // If end of row, close </tr>
+    if ((index + 1) % 3 === 0) {
+      html += "</tr>"
+    }
+
+    // Return the HTML string
     return html;
+
   }
 
 
@@ -60,6 +54,8 @@
   //
 
   // Initialize the app
+  Reef.debug(true);
+  console.log(app);
   app.render();
 
 })();
