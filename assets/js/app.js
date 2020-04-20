@@ -25,6 +25,12 @@
   // Functions
   //
 
+  /**
+   * 
+   * @param   {String} square The value of the square ("", "x", or "o")
+   * @param   {Number} index  The index of the square
+   * @returns {String}        An HTML string for the square
+   */
   function createSquare (square, index) {
 
     // Store the HTML string
