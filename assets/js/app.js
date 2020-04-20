@@ -55,6 +55,30 @@
 
   }
 
+  /**
+   * Take the current player's turn
+   * @param {Object} event The Event object
+   */
+  function takeTurn (event) {
+
+    // Get the index of the clicked square
+    var index = event.target.getAttribute("data-square");
+    if (!index) return;
+
+    // Get an immutable clone of the current state
+    var data = app.getData();
+
+    // Claim the square
+    data.squares[index] = data.currentTurn ? "x" : "o";
+
+    // Change current player
+    data.currentTurn = !data.currentTurn;
+
+    // Update the state
+    app.setData(data);
+
+  }
+
 
   //
   // Inits & Event Listeners
@@ -65,14 +89,7 @@
   console.log(app);
   app.render();
 
-  // Take turn when a square is clicked
-  document.body.addEventListener("click", function (event) {
-
-    // Get the index of the clicked square
-    var index = event.target.getAttribute("data-square");
-    if (!index) return;
-    console.log(index);
-
-  });
+  // Take turns when squares are clicked
+  document.body.addEventListener("click", takeTurn);
 
 })();
