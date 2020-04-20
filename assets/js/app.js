@@ -65,4 +65,14 @@
   console.log(app);
   app.render();
 
+  // Take turn when a square is clicked
+  document.body.addEventListener("click", function (event) {
+
+    // Get the index of the clicked square
+    var index = event.target.getAttribute("data-square");
+    if (!index) return;
+    console.log(index);
+
+  });
+
 })();
