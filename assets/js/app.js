@@ -22,6 +22,42 @@
   //
 
   /**
+   * Create a message that shows the winner
+   * @param   {Object} props The current state/data
+   * @returns {String} An HTML string
+   */
+  function createWinHTML (props) {
+
+    return (
+      "<h2>🎉 The winner is " + props.winner + "! 🎉</h2>" +
+      "<button type='button' data-reset>Play Again</button>"
+    );
+
+  }
+
+  /**
+   * Check whether or not a square is claimed
+   * @param   {String} square The square
+   * @returns {Boolean}       True if claimed; false otherwise
+   */
+  function isClaimed (square) {
+    return square !== "";
+  }
+
+  /**
+   * Create a "it's a tie" message
+   * @returns {String} An HTML string
+   */
+  function createTieHTML () {
+
+    return (
+      "<h2>It's a tie!</h2>" +
+      "<button type='button' data-reset>Play Again</button>"
+    );
+
+  }
+
+  /**
    * 
    * @param   {String} square The value of the square ("", "x", or "o")
    * @param   {Number} index  The index of the square
@@ -54,6 +90,17 @@
 
   }
 
+  function createBoardHTML (props) {
+
+    return (
+      "<p>Current turn: " + (props.currentTurn ? "X" : "O") + "</p>" +
+      "<table>" +
+        props.squares.map(createSquare).join("") +
+      "</table>"
+    );
+
+  }
+
   /**
    * Update the UI based on the current state/data
    * @param   {Object} props The state/data
@@ -61,21 +108,14 @@
    */
   function template (props) {
 
-    // Normal play
-    if (!props.winner) {
-      return (
-        "<p>Current turn: " + (props.currentTurn ? "X" : "O") + "</p>" +
-        "<table>" +
-          props.squares.map(createSquare).join("") +
-        "</table>"
-      );
-    }
+    // If there's a winner, show who it is
+    if (props.winner) return createWinHTML(props);
 
-    // Show winner
-    return (
-      "<h2>🎉 The winner is " + props.winner + "! 🎉</h2>" +
-      "<button type='button' data-reset>Play Again</button>"
-    );
+    // If every square is claimed, show that it's a tie
+    if (props.squares.every(isClaimed)) return createTieHTML();
+
+    // Show the board for normal play
+    return createBoardHTML(props);
 
   }
 
