@@ -79,7 +79,7 @@
 
     // Add square
     html += (
-      "<td><button type='button' data-square='" + index + "'" + (square ? "disabled" : "") + ">" +
+      "<td><button class='board__square' type='button' data-square='" + index + "'" + (square ? "disabled" : "") + ">" +
         square +
       "</button></td>"
     );
@@ -98,7 +98,7 @@
 
     return (
       "<p>Current turn: " + (props.currentTurn ? "X" : "O") + "</p>" +
-      "<table>" +
+      "<table class='board'>" +
         props.squares.map(createSquare).join("") +
       "</table>"
     );
