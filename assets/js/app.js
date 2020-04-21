@@ -16,6 +16,10 @@
     template: template
   });
 
+  // Get an immutable clone of the initial data
+  // (for resetting the board later on)
+  var data = app.getData();
+
 
   //
   // Functions
@@ -197,6 +201,34 @@
 
   }
 
+  /**
+   * Reset the board to its initial state
+   * @param {Object} event The Event object 
+   */
+  function resetBoard (event) {
+
+    // Bail if anything other than "Play Again" was clicked
+    if (!event.target.hasAttribute("data-reset")) return;
+
+    // Reset the data
+    app.setData(data);
+
+  }
+
+  /**
+   * Handle click events
+   * @param {Object} event The Event object 
+   */
+  function clickHandler (event) {
+
+    // Take turns when squares are clicked
+    takeTurn(event);
+
+    // Reset the board when "Play Again" is clicked
+    resetBoard(event);
+
+  }
+
 
   //
   // Inits & Event Listeners
@@ -205,7 +237,7 @@
   // Initialize the app
   app.render();
 
-  // Take turns when squares are clicked
-  document.body.addEventListener("click", takeTurn);
+  // Handle click events
+  document.body.addEventListener("click", clickHandler);
 
 })();
