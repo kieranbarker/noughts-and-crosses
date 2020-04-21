@@ -119,6 +119,12 @@
 
   }
 
+  /**
+   * Check if this is a winning combination of squares
+   * @param   {Object} data        The current state/data
+   * @param   {Array}  combination The combination of square indices
+   * @returns {Boolean}            True if winning combination; false otherwise
+   */
   function isWinningCombination (data, combination) {
 
     // Get the squares for this combination
@@ -132,6 +138,11 @@
 
   }
 
+  /**
+   * Check whether or not there's a winner
+   * @param   {Object} data The current state/data
+   * @returns {Boolean}     True if there's a winner; false otherwise
+   */
   function isWinner (data) {
 
     // Winning combinations of square indices
