@@ -203,8 +203,6 @@
   //
 
   // Initialize the app
-  Reef.debug(true);
-  console.log(app);
   app.render();
 
   // Take turns when squares are clicked
