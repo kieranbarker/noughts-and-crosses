@@ -119,6 +119,43 @@
 
   }
 
+  function isWinningCombination (data, combination) {
+
+    // Get the squares for this combination
+    var squares = [data.squares[combination[0]], data.squares[combination[1]], data.squares[combination[2]]];
+
+    // Make sure all squares have the same value
+    var allSameValue = (squares[0] === squares[1]) && (squares[0] === squares[2]);
+
+    // Return true if squares are all claimed and all same value
+    return squares.every(isClaimed) && allSameValue;
+
+  }
+
+  function isWinner (data) {
+
+    // Winning combinations of square indices
+    var possibleWins = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+
+    // Get the winning combination
+    var win = possibleWins.filter(function (combination) {
+      return isWinningCombination(data, combination);
+    });
+
+    // Return true if there is a winning combination
+    return win.length > 0;
+
+  }
+
   /**
    * Take the current player's turn
    * @param {Object} event The Event object
@@ -134,6 +171,12 @@
 
     // Claim the square
     data.squares[index] = data.currentTurn ? "x" : "o";
+
+    // If there's a winner, end the game
+    if (isWinner(data)) {
+      data.winner = data.currentTurn ? "X" : "O";
+      return app.setData(data);
+    }
 
     // Change current player
     data.currentTurn = !data.currentTurn;
