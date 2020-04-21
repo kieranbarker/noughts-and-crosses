@@ -79,9 +79,9 @@
 
     // Add square
     html += (
-      "<td><button class='board__square' type='button' data-square='" + index + "'" + (square ? "disabled" : "") + ">" +
-        square +
-      "</button></td>"
+      "<td>" +
+        "<button class='board__square' type='button' aria-label='Click to fill this square' data-square='" + index + "'" + (square ? "disabled" : "") + ">" + square + "</button>" +
+      "</td>"
     );
 
     // If end of row, close </tr>
