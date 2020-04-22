@@ -53,7 +53,7 @@
   }
 
   /**
-   * 
+   * Create a square for the board
    * @param   {String} square The value of the square ("", "x", or "o")
    * @param   {Number} index  The index of the square
    * @returns {String}        An HTML string for the square
@@ -85,6 +85,11 @@
 
   }
 
+  /**
+   * Create the HTML for the game board
+   * @param   {Object} props The current state/data
+   * @returns {String}       An HTML string
+   */
   function createBoardHTML (props) {
 
     return (
