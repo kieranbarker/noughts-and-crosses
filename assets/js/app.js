@@ -190,7 +190,7 @@
     var data = app.getData();
 
     // Claim the square
-    data.squares[index] = data.currentTurn ? "x" : "o";
+    data.squares[index] = data.currentTurn ? "X" : "O";
 
     // If there's a winner, end the game
     if (isWinner(data)) {
