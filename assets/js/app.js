@@ -7,7 +7,7 @@
   //
 
   // Create the Reef component
-  var app = new Reef("#app", {
+  var app = new Reef(document.querySelector("#app"), {
     data: {
       currentTurn: true, // true for X; false for O
       squares: ["", "", "", "", "", "", "", "", ""],
@@ -40,15 +40,6 @@
   }
 
   /**
-   * Check whether or not a square is claimed
-   * @param   {String} square The square
-   * @returns {Boolean}       True if claimed; false otherwise
-   */
-  function isClaimed (square) {
-    return square !== "";
-  }
-
-  /**
    * Create a "it's a tie" message
    * @returns {String} An HTML string
    */
@@ -62,7 +53,7 @@
   }
 
   /**
-   * 
+   * Create a square for the board
    * @param   {String} square The value of the square ("", "x", or "o")
    * @param   {Number} index  The index of the square
    * @returns {String}        An HTML string for the square
@@ -80,7 +71,7 @@
     // Add square
     html += (
       "<td>" +
-        "<button class='board__square' type='button' aria-label='Click to fill this square' data-square='" + index + "'" + (square ? "disabled" : "") + ">" + square + "</button>" +
+        "<button class='board__square' type='button' aria-label='Mark this square' data-square='" + index + "'" + (square ? "disabled" : "") + ">" + square + "</button>" +
       "</td>"
     );
 
@@ -94,6 +85,11 @@
 
   }
 
+  /**
+   * Create the HTML for the game board
+   * @param   {Object} props The current state/data
+   * @returns {String}       An HTML string
+   */
   function createBoardHTML (props) {
 
     return (
@@ -103,6 +99,15 @@
       "</table>"
     );
 
+  }
+
+  /**
+   * Check whether or not a square is claimed
+   * @param   {String} square The square
+   * @returns {Boolean}       True if claimed; false otherwise
+   */
+  function isClaimed (square) {
+    return square !== "";
   }
 
   /**
@@ -238,6 +243,6 @@
   app.render();
 
   // Handle click events
-  document.body.addEventListener("click", clickHandler);
+  app.elem.addEventListener("click", clickHandler);
 
 })();
