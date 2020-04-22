@@ -7,7 +7,7 @@
   //
 
   // Create the Reef component
-  var app = new Reef("#app", {
+  var app = new Reef(document.querySelector("#app"), {
     data: {
       currentTurn: true, // true for X; false for O
       squares: ["", "", "", "", "", "", "", "", ""],
@@ -238,6 +238,6 @@
   app.render();
 
   // Handle click events
-  document.body.addEventListener("click", clickHandler);
+  app.elem.addEventListener("click", clickHandler);
 
 })();
