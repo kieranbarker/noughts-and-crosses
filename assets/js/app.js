@@ -71,7 +71,7 @@
     // Add square
     html += (
       "<td>" +
-        "<button class='board__square' type='button' aria-label='Click to fill this square' data-square='" + index + "'" + (square ? "disabled" : "") + ">" + square + "</button>" +
+        "<button class='board__square' type='button' aria-label='Mark this square' data-square='" + index + "'" + (square ? "disabled" : "") + ">" + square + "</button>" +
       "</td>"
     );
 
