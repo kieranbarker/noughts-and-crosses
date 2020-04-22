@@ -40,15 +40,6 @@
   }
 
   /**
-   * Check whether or not a square is claimed
-   * @param   {String} square The square
-   * @returns {Boolean}       True if claimed; false otherwise
-   */
-  function isClaimed (square) {
-    return square !== "";
-  }
-
-  /**
    * Create a "it's a tie" message
    * @returns {String} An HTML string
    */
@@ -103,6 +94,15 @@
       "</table>"
     );
 
+  }
+
+  /**
+   * Check whether or not a square is claimed
+   * @param   {String} square The square
+   * @returns {Boolean}       True if claimed; false otherwise
+   */
+  function isClaimed (square) {
+    return square !== "";
   }
 
   /**
