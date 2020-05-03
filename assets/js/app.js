@@ -189,12 +189,15 @@
     // Get an immutable clone of the current state
     var data = app.getData();
 
+    // Get the current player
+    var currentPlayer = data.currentTurn ? "X" : "O";
+
     // Claim the square
-    data.squares[index] = data.currentTurn ? "X" : "O";
+    data.squares[index] = currentPlayer;
 
     // If there's a winner, end the game
     if (isWinner(data)) {
-      data.winner = data.currentTurn ? "X" : "O";
+      data.winner = currentPlayer;
       return app.setData(data);
     }
 
