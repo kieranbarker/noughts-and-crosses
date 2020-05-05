@@ -8,22 +8,28 @@
 
   // Create the Reef component
   var app = new Reef(document.querySelector("#app"), {
-    data: {
-      currentTurn: true, // true for X; false for O
-      squares: ["", "", "", "", "", "", "", "", ""],
-      winner: null
-    },
+    data: getStartingData(),
     template: template
   });
-
-  // Get an immutable clone of the initial data
-  // (for resetting the board later on)
-  var data = app.getData();
 
 
   //
   // Functions
   //
+
+  /**
+   * Get the starting data for a new game
+   * @returns {Object} A brand new data object
+   */
+  function getStartingData () {
+
+    return {
+      currentTurn: true, // true for X; false for O
+      squares: ["", "", "", "", "", "", "", "", ""],
+      winner: null
+    };
+
+  }
 
   /**
    * Create a message that shows the winner
@@ -186,26 +192,19 @@
     var index = event.target.getAttribute("data-square");
     if (!index) return;
 
-    // Get an immutable clone of the current state
-    var data = app.getData();
-
     // Get the current player
-    var currentPlayer = data.currentTurn ? "X" : "O";
+    var currentPlayer = app.data.currentTurn ? "X" : "O";
 
     // Claim the square
-    data.squares[index] = currentPlayer;
+    app.data.squares[index] = currentPlayer;
 
     // If there's a winner, end the game
-    if (isWinner(data)) {
-      data.winner = currentPlayer;
-      return app.setData(data);
+    if (isWinner(app.data)) {
+      return app.data.winner = currentPlayer;
     }
 
     // Change current player
-    data.currentTurn = !data.currentTurn;
-
-    // Update the state
-    app.setData(data);
+    app.data.currentTurn = !app.data.currentTurn;
 
   }
 
@@ -219,7 +218,7 @@
     if (!event.target.hasAttribute("data-reset")) return;
 
     // Reset the data
-    app.setData(data);
+    app.data = getStartingData();
 
   }
 
