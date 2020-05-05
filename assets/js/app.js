@@ -136,14 +136,13 @@
 
   /**
    * Check if this is a winning combination of squares
-   * @param   {Object} data        The current state/data
-   * @param   {Array}  combination The combination of square indices
-   * @returns {Boolean}            True if winning combination; false otherwise
+   * @param   {Array} combination The combination of square indices
+   * @returns {Boolean}           True if winning combination; false otherwise
    */
-  function isWinningCombination (data, combination) {
+  function isWinningCombination (combination) {
 
     // Get the squares for this combination
-    var squares = [data.squares[combination[0]], data.squares[combination[1]], data.squares[combination[2]]];
+    var squares = [app.data.squares[combination[0]], app.data.squares[combination[1]], app.data.squares[combination[2]]];
 
     // Make sure all squares have the same value
     var allSameValue = (squares[0] === squares[1]) && (squares[0] === squares[2]);
@@ -154,11 +153,10 @@
   }
 
   /**
-   * Check whether or not there's a winner
-   * @param   {Object} data The current state/data
-   * @returns {Boolean}     True if there's a winner; false otherwise
+   * Check if there's a winner
+   * @returns {Boolean} True or false
    */
-  function isWinner (data) {
+  function isWinner () {
 
     // Winning combinations of square indices
     var possibleWins = [
@@ -172,13 +170,8 @@
       [2, 4, 6]
     ];
 
-    // Get the winning combination
-    var win = possibleWins.filter(function (combination) {
-      return isWinningCombination(data, combination);
-    });
-
     // Return true if there is a winning combination
-    return win.length > 0;
+    return possibleWins.filter(isWinningCombination).length > 0;
 
   }
 
@@ -199,7 +192,7 @@
     app.data.squares[index] = currentPlayer;
 
     // If there's a winner, end the game
-    if (isWinner(app.data)) {
+    if (isWinner()) {
       return app.data.winner = currentPlayer;
     }
 
