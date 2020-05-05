@@ -38,10 +38,10 @@
    */
   function createWinHTML (props) {
 
-    return (
-      "<h2>🎉 The winner is " + props.winner + "! 🎉</h2>" +
-      "<button type='button' data-reset>Play Again</button>"
-    );
+    return `
+      <h2>🎉 The winner is ${props.winner}! 🎉</h2>
+      <button type="button" data-reset>Play Again</button>
+    `;
 
   }
 
