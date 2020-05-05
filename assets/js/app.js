@@ -34,7 +34,7 @@
   /**
    * Create a message that shows the winner
    * @param   {Object} props The current state/data
-   * @returns {String} An HTML string
+   * @returns {String}       An HTML string
    */
   function createWinHTML (props) {
 
