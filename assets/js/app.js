@@ -100,12 +100,12 @@
    */
   function createBoardHTML (props) {
 
-    return (
-      "<p>Current turn: " + (props.currentTurn ? "X" : "O") + "</p>" +
-      "<table class='board'>" +
-        props.squares.map(createSquare).join("") +
-      "</table>"
-    );
+    return `
+      <p>Current turn: ${props.currentTurn ? "X" : "O"}</p>
+      <table class="board">
+        ${props.squares.map(createSquare).join("")}
+      </table>
+    `;
 
   }
 
