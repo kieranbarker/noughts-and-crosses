@@ -8,17 +8,9 @@
 
   // Create the Reef component
   var app = new Reef(document.querySelector("#app"), {
-    data: {
-      currentTurn: true, // true for X; false for O
-      squares: ["", "", "", "", "", "", "", "", ""],
-      winner: null
-    },
+    data: getStartingData(),
     template: template
   });
-
-  // Get an immutable clone of the initial data
-  // (for resetting the board later on)
-  var data = app.getData();
 
 
   //
@@ -26,16 +18,30 @@
   //
 
   /**
+   * Get the starting data for a new game
+   * @returns {Object} A brand new data object
+   */
+  function getStartingData () {
+
+    return {
+      currentTurn: true, // true for X; false for O
+      squares: ["", "", "", "", "", "", "", "", ""],
+      winner: null
+    };
+
+  }
+
+  /**
    * Create a message that shows the winner
    * @param   {Object} props The current state/data
-   * @returns {String} An HTML string
+   * @returns {String}       An HTML string
    */
   function createWinHTML (props) {
 
-    return (
-      "<h2>🎉 The winner is " + props.winner + "! 🎉</h2>" +
-      "<button type='button' data-reset>Play Again</button>"
-    );
+    return `
+      <h2>🎉 The winner is ${props.winner}! 🎉</h2>
+      <button type="button" data-reset>Play Again</button>
+    `;
 
   }
 
@@ -45,10 +51,10 @@
    */
   function createTieHTML () {
 
-    return (
-      "<h2>It's a tie!</h2>" +
-      "<button type='button' data-reset>Play Again</button>"
-    );
+    return `
+      <h2>It's a tie!</h2>
+      <button type="button" data-reset>Play Again</button>
+    `;
 
   }
 
@@ -69,11 +75,13 @@
     }
 
     // Add square
-    html += (
-      "<td>" +
-        "<button class='board__square' type='button' aria-label='Mark this square' data-square='" + index + "'" + (square ? "disabled" : "") + ">" + square + "</button>" +
-      "</td>"
-    );
+    html += `
+      <td>
+        <button class="board__square" type="button" aria-label="Mark this square" data-square="${index}" ${square ? "disabled" : ""}>
+          ${square}
+        </button>
+      </td>
+    `;
 
     // If end of row, close </tr>
     if ((index + 1) % 3 === 0) {
@@ -92,12 +100,12 @@
    */
   function createBoardHTML (props) {
 
-    return (
-      "<p>Current turn: " + (props.currentTurn ? "X" : "O") + "</p>" +
-      "<table class='board'>" +
-        props.squares.map(createSquare).join("") +
-      "</table>"
-    );
+    return `
+      <p>Current turn: ${props.currentTurn ? "X" : "O"}</p>
+      <table class="board">
+        ${props.squares.map(createSquare).join("")}
+      </table>
+    `;
 
   }
 
@@ -130,14 +138,13 @@
 
   /**
    * Check if this is a winning combination of squares
-   * @param   {Object} data        The current state/data
-   * @param   {Array}  combination The combination of square indices
-   * @returns {Boolean}            True if winning combination; false otherwise
+   * @param   {Array} combination The combination of square indices
+   * @returns {Boolean}           True if winning combination; false otherwise
    */
-  function isWinningCombination (data, combination) {
+  function isWinningCombination (combination) {
 
     // Get the squares for this combination
-    var squares = [data.squares[combination[0]], data.squares[combination[1]], data.squares[combination[2]]];
+    var squares = [app.data.squares[combination[0]], app.data.squares[combination[1]], app.data.squares[combination[2]]];
 
     // Make sure all squares have the same value
     var allSameValue = (squares[0] === squares[1]) && (squares[0] === squares[2]);
@@ -148,11 +155,10 @@
   }
 
   /**
-   * Check whether or not there's a winner
-   * @param   {Object} data The current state/data
-   * @returns {Boolean}     True if there's a winner; false otherwise
+   * Check if there's a winner
+   * @returns {Boolean} True or false
    */
-  function isWinner (data) {
+  function isWinner () {
 
     // Winning combinations of square indices
     var possibleWins = [
@@ -166,13 +172,8 @@
       [2, 4, 6]
     ];
 
-    // Get the winning combination
-    var win = possibleWins.filter(function (combination) {
-      return isWinningCombination(data, combination);
-    });
-
     // Return true if there is a winning combination
-    return win.length > 0;
+    return possibleWins.filter(isWinningCombination).length > 0;
 
   }
 
@@ -186,23 +187,19 @@
     var index = event.target.getAttribute("data-square");
     if (!index) return;
 
-    // Get an immutable clone of the current state
-    var data = app.getData();
+    // Get the current player
+    var currentPlayer = app.data.currentTurn ? "X" : "O";
 
     // Claim the square
-    data.squares[index] = data.currentTurn ? "X" : "O";
+    app.data.squares[index] = currentPlayer;
 
     // If there's a winner, end the game
-    if (isWinner(data)) {
-      data.winner = data.currentTurn ? "X" : "O";
-      return app.setData(data);
+    if (isWinner()) {
+      return app.data.winner = currentPlayer;
     }
 
     // Change current player
-    data.currentTurn = !data.currentTurn;
-
-    // Update the state
-    app.setData(data);
+    app.data.currentTurn = !app.data.currentTurn;
 
   }
 
@@ -216,7 +213,7 @@
     if (!event.target.hasAttribute("data-reset")) return;
 
     // Reset the data
-    app.setData(data);
+    app.data = getStartingData();
 
   }
 
