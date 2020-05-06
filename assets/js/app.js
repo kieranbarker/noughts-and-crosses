@@ -51,10 +51,10 @@
    */
   function createTieHTML () {
 
-    return (
-      "<h2>It's a tie!</h2>" +
-      "<button type='button' data-reset>Play Again</button>"
-    );
+    return `
+      <h2>It's a tie!</h2>
+      <button type="button" data-reset>Play Again</button>
+    `;
 
   }
 
