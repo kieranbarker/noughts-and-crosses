@@ -75,11 +75,13 @@
     }
 
     // Add square
-    html += (
-      "<td>" +
-        "<button class='board__square' type='button' aria-label='Mark this square' data-square='" + index + "'" + (square ? "disabled" : "") + ">" + square + "</button>" +
-      "</td>"
-    );
+    html += `
+      <td>
+        <button class="board__square" type="button" aria-label="Mark this square" data-square="${index}" ${square ? "disabled" : ""}>
+          ${square}
+        </button>
+      </td>
+    `;
 
     // If end of row, close </tr>
     if ((index + 1) % 3 === 0) {
